@@ -1,0 +1,32 @@
+﻿@model KandTKardach.Models.Album
+@{
+    ViewBag.Title = "Wedding";
+}
+
+@{
+    if (Model.Images.Count == 0)
+    {
+        <h2> No wedding pictures loaded...</h2>
+    }
+    else
+    {
+        var interval = 4;
+        <div class="image-grid-row">
+        @{
+        for (int i = 0; i < interval; i++)
+        {
+            <div class="image-grid-column">
+            @{
+            for (int j = i; j < Model.Images.Count; j += interval)
+            {
+                <a href = "@Url.Action("WeddingImage", "Wedding", new { Model.Images[j].Id })" >
+                    <img src = "@Model.Images[j].Url" style = "width:100%" />
+                </a >
+            }
+            }
+            </div>
+        }
+        }
+        </div>
+    }
+}
