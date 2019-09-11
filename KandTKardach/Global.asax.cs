@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -11,7 +12,26 @@ namespace KandTKardach
         {
             AreaRegistration.RegisterAllAreas();
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);         
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+
+            HttpException httpEx = ex as HttpException;
+            if (httpEx != null)
+            {
+                switch (httpEx.GetHttpCode())
+                {
+                    case 404:
+                        Response.Redirect("~/ErrorHandler/NotFound");
+                        break;
+                    default:
+                        Response.Redirect($"~/ErrorHandler/Error?exception={httpEx.Message}");
+                        break;
+                }
+            }
         }
     }
 }

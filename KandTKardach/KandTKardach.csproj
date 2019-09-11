@@ -113,6 +113,9 @@
     <Folder Include="Views\Wedding\" />
     <Folder Include="Views\Baby\" />
     <Folder Include="ViewModel\" />
+    <Folder Include="Views\ErrorHandler\" />
+    <Folder Include="Content\Images\" />
+    <Folder Include="Content\Thumbnails\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
@@ -127,7 +130,10 @@
     <Compile Include="Models\KAndTDatabase.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Controllers\ErrorHandlerController.cs" />
+    <Compile Include="Models\ImageProcessing.cs" />
     <Compile Include="ViewModel\ImageViewModel.cs" />
+    <Compile Include="Models\Constants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -172,6 +178,9 @@
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Views\Shared\_Image.cshtml" />
     <Content Include="Views\Wedding\WeddingImage.cshtml" />
+    <Content Include="Views\ErrorHandler\NotFound.cshtml" />
+    <Content Include="Views\ErrorHandler\Index.cshtml" />
+    <Content Include="Views\ErrorHandler\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\jquery-3.4.1.slim.min.map" />

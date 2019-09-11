@@ -16,14 +16,15 @@
         for (int i = 0; i < interval; i++)
         {
             <div class="image-grid-column">
-            @{
-            for (int j = i; j < Model.Images.Count; j += interval)
-            {
-                <a href = "@Url.Action("WeddingImage", "Wedding", new { Model.Images[j].Id })" >
-                    <img src = "@Model.Images[j].Url" style = "width:100%" />
-                </a >
-            }
-            }
+                @{
+                for (int j = i; j < Model.Images.Count; j += interval)
+                {
+                    string thm = KandTKardach.Models.ImageProcessing.GetThumbnailPath(Model.Images[j].Name);
+                    <a href="@Url.Action("WeddingImage", "Wedding", new { Model.Images[j].Id })">
+                        <img src="@thm" style="width:100%" />
+                    </a>
+                }
+                }
             </div>
         }
         }

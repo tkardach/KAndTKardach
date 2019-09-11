@@ -39,3 +39,7 @@ Thumbs.db
 
 # dotCover
 *.dotCover
+
+# Project
+./KandTKardach/Content/Images/*
+./KandTKardach/Content/Thumbnails/*

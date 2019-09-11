@@ -6,7 +6,7 @@ namespace KandTKardach.ViewModel
     public class ImageViewModel
     {
 		public ImageViewModel(string ablum, Image image)
-        {
+        { 
 			m_album = Album;
 			m_image = image;
         }

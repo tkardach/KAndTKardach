@@ -14,6 +14,9 @@ namespace KandTKardach.Controllers
         {
 			KAndTDatabase db = KAndTDatabase.Instance;
 			var album = db.Albums["Wedding"];
+			foreach (var image in album.Images)
+				ImageProcessing.CreateThumbnail(Server.MapPath(image.Url), 
+                                                Server.MapPath(Constants.THUMBNAIL_LOCATION));
 			return View (album);
         }
 
