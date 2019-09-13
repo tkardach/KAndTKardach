@@ -20,6 +20,11 @@ namespace KandTKardach.Models
             }
         }
 
+        public KAndTDatabase(bool mock) : base(mock)
+        {
+
+        }
+
 		public KAndTDatabase() : base("ktkardach", "10.0.0.139", "ktuser", "gingerwaffles", "3306")
         {
 			m_albums = new Dictionary<string, Album>();

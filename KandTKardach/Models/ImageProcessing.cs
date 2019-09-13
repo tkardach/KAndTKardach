@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.IO;
+using ImageProcessing;
 
 namespace KandTKardach.Models
 {
     public class ImageProcessing
     {
+
         public ImageProcessing()
         {
         }
@@ -37,56 +36,20 @@ namespace KandTKardach.Models
                 if (File.Exists(thumbName)) return true;
 
                 var img = System.Drawing.Image.FromFile(orig);
-                CompressImage(orig, thumbName, Constants.THUMBNAIL_FACTOR, img.RawFormat);
+                // Remove meta-data from image
+                var exifRemoved = Compressor.RemoveExif(orig);
+                var resized = Compressor.ResizeImage(exifRemoved, Constants.THUMBNAIL_MAX_DIMENSION);
+
+                Constants.CreateTemp();
+                string fileLoc = string.Format(@"{0}\tmpImg.{1}", Constants.TEMP_FOLDER, orig.Substring(orig.LastIndexOf('.') + 1));
+                resized.Save(fileLoc, resized.RawFormat);
+                Compressor.CompressImage(fileLoc, thumbName, Constants.THUMBNAIL_FACTOR, img.RawFormat);
+                Constants.RemoveTemp();
             }
             catch
 			{ return false; } 
 
             return true;        
 		}
-
-        /// <summary>
-        /// Compresses the JPEG by a given factor.
-        /// </summary>
-        /// <param name="orig">Original.</param>
-        /// <param name="dest">Destination.</param>
-        /// <param name="factor">Factor.</param>
-        public static void CompressJpeg(string orig, string dest, byte factor)
-		{
-			CompressImage(orig, dest, factor, ImageFormat.Jpeg);
-		}
-
-        /// <summary>
-        /// Compresses the image by a given factor.
-        /// </summary>
-        /// <param name="orig">Original.</param>
-        /// <param name="dest">Destination.</param>
-        /// <param name="factor">Factor.</param>
-        /// <param name="format">Format.</param>
-        public static void CompressImage(string orig, string dest, byte factor, ImageFormat format)
-		{
-			using (Bitmap bmp1 = new Bitmap(orig))
-			{
-				ImageCodecInfo jpgEncoder = GetEncoder(format);
-				Encoder encoder = Encoder.Quality;
-
-				EncoderParameters encParams = new EncoderParameters(1);
-
-				EncoderParameter param = new EncoderParameter(encoder, factor);
-				encParams.Param[0] = param;
-				bmp1.Save(dest, jpgEncoder, encParams);
-			}
-		}
-
-        private static ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                    return codec;
-            }
-			return null;
-        }
     }
 }

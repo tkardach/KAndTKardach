@@ -33,5 +33,14 @@ namespace KandTKardach.Models
 				throw e;
             }
         }
+
+        protected Database(bool mock)
+        {
+            DB_NAME = "MockDB";
+            DB_IP = "MockIP";
+            DB_USER = "MockUser";
+            DB_PW = "MockPW";
+            DB_PORT = "MockPort";
+        }
     }
 }
