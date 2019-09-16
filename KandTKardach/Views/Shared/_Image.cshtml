@@ -1,5 +1,9 @@
 ﻿@model KandTKardach.Models.Image
 
+<div class="image-view rounded-corners">
 @{
-<img src="@Model.Url" style="width:100%"/>
+    <img src="@Model.Url" />
 }
+    <br />
+    <p>@Model.Name</p>
+</div>

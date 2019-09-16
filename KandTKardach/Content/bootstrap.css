@@ -93,6 +93,32 @@ p {
   margin-bottom: 1rem;
 }
 
+.rounded-corners {
+  border-radius: 15px;
+  background: #525252;
+  padding: 20px; 
+  width: 200px;
+}
+
+.image-view {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  width: 75%;
+}
+
+.image-view img {
+  display: block;
+  margin: auto;
+  max-width: 100%;
+}
+
+.image-view p {
+  text-align: center;
+  color: #ECECEC;
+  font-weight: bold;
+}
+
 .image-grid-wrap {
   display: grid;
   grid-gap: 10px;
