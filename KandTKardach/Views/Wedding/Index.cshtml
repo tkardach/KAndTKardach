@@ -14,9 +14,8 @@
         @{
             for (int j = 0; j < Model.Images.Count; j++)
             {
-                string thm = KandTKardach.Models.ImageProcessing.GetThumbnailPath(Model.Images[j].Name);
                 <a href="@Url.Action("WeddingImage", "Wedding", new { Model.Images[j].Id })">
-                    <img src="@thm" />
+                    <img src="@Model.Images[j].ThumbnailUrl" />
                 </a>
             }
         }

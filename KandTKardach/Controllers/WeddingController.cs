@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using KandTKardach.Models;
 using KandTKardach.ViewModel;
+using System.IO;
 
 namespace KandTKardach.Controllers
 {
@@ -12,17 +13,21 @@ namespace KandTKardach.Controllers
     {
         public ActionResult Index()
         {
-			KAndTDatabase db = KAndTDatabase.Instance;
-			var album = db.Albums["Wedding"];
-            foreach (var image in album.Images)
-                KandTKardach.Models.ImageProcessing.CreateThumbnail(Server.MapPath(image.Url),
-                                                Server.MapPath(Constants.THUMBNAIL_LOCATION));
+			KAndTDatabase db = KAndTDatabase.MockInstance;
+            // TODO : If tumbnail does not exist for any given photo, create one
+
+            string dirName = Server.MapPath(@"~\Content\Mock\Thumbnails\");
+            var files = System.IO.Directory.GetFiles(dirName);
+            db.InitializeMockImages(files);
+
+            var album = db.Albums["Wedding"];
+
             return View (album);
         }
 
         public ActionResult WeddingImage(int id)
 		{
-            var db = KAndTDatabase.Instance;
+            var db = KAndTDatabase.MockInstance;
             var image = db.Albums["Wedding"].Images.Single(o => o.Id == id);
 			var imageVM = new ImageViewModel("Wedding", image);
 			return View(imageVM);

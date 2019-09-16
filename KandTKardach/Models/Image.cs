@@ -9,8 +9,15 @@ namespace KandTKardach.Models
 			m_name = name;
 			m_url = url;
         }
+        public Image(int id, string name, string url, string thmbUrl)
+        {
+            m_id = id;
+            m_name = name;
+            m_url = url;
+            m_thmbUrl = thmbUrl;
+        }
 
-		protected int m_id;
+        protected int m_id;
         /// <summary>
         /// Gets the identifier.
         /// </summary>
@@ -38,6 +45,12 @@ namespace KandTKardach.Models
         public string Url
 		{
 			get { return m_url; }
-		}      
+		}
+
+        protected string m_thmbUrl;
+        public string ThumbnailUrl
+        {
+            get { return m_thmbUrl; }
+        }
     }
 }

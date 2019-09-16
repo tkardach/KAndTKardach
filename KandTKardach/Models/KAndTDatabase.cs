@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using System.IO;
+using System.Reflection;
 
 namespace KandTKardach.Models
 {
@@ -8,6 +10,8 @@ namespace KandTKardach.Models
 	{      
 		private const string GET_ALL_ALBUMS = "SELECT * FROM album";
 		private const string GET_ALL_IMAGES = "SELECT * FROM image";
+
+        protected bool m_mockMode;
 
 		private static KAndTDatabase _instance;
 		public static KAndTDatabase Instance
@@ -20,14 +24,29 @@ namespace KandTKardach.Models
             }
         }
 
-        public KAndTDatabase(bool mock) : base(mock)
+        private static KAndTDatabase _mockInstance;
+        public static KAndTDatabase MockInstance
         {
+            get
+            {
+                if (_mockInstance == null)
+                    _mockInstance = new KAndTDatabase(true);
+                return _mockInstance;
+            }
+        }
+
+        private KAndTDatabase(bool mock) : base(mock)
+        {
+            m_mockMode = true;
+            m_albums = new Dictionary<string, Album>();
+            m_albums.Add("Wedding", new Album(1, "Wedding"));
 
         }
 
-		public KAndTDatabase() : base("ktkardach", "10.0.0.139", "ktuser", "gingerwaffles", "3306")
+		private KAndTDatabase() : base("ktkardach", "10.0.0.139", "ktuser", "gingerwaffles", "3306")
         {
-			m_albums = new Dictionary<string, Album>();
+            m_mockMode = false;
+            m_albums = new Dictionary<string, Album>();
 			_connection.Open();
 			try
 			{            
@@ -73,5 +92,19 @@ namespace KandTKardach.Models
 		{
 			get { return m_albums; }
 		}
+        
+        public void InitializeMockImages(string[] files)
+        {
+            int id = 0;
+            foreach (var album in m_albums.Values)
+            {
+                foreach (var file in files)
+                {
+                    var thmbUrl = @"\Content\Mock\Thumbnails\" + Path.GetFileName(file);
+                    var url = @"\Content\Mock\Images\" + Path.GetFileName(file);
+                    album.Images.Add(new Models.Image(id++, Path.GetFileName(file), url, thmbUrl));
+                }
+            }
+        }
     }
 }
