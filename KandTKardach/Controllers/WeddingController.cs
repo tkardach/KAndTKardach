@@ -13,13 +13,9 @@ namespace KandTKardach.Controllers
     {
         public ActionResult Index()
         {
-			KAndTDatabase db = KAndTDatabase.MockInstance;
+			KAndTDatabase db = KAndTDatabase.Instance;
             // TODO : If tumbnail does not exist for any given photo, create one
-
-            string dirName = Server.MapPath(@"~\Content\Mock\Thumbnails\");
-            var files = System.IO.Directory.GetFiles(dirName);
-            db.InitializeMockImages(files);
-
+            
             var album = db.Albums["Wedding"];
 
             return View (album);
@@ -27,7 +23,7 @@ namespace KandTKardach.Controllers
 
         public ActionResult WeddingImage(int id)
 		{
-            var db = KAndTDatabase.MockInstance;
+            var db = KAndTDatabase.Instance;
             var image = db.Albums["Wedding"].Images.Single(o => o.Id == id);
 			var imageVM = new ImageViewModel("Wedding", image);
 			return View(imageVM);

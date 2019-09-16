@@ -19,19 +19,10 @@ namespace KandTKardach.Models
             get
             {
                 if (_instance == null)
-					_instance = new KAndTDatabase();
+                {
+                    _instance = new KAndTDatabase(Configuration.MockEnabled);
+                }
                 return _instance;
-            }
-        }
-
-        private static KAndTDatabase _mockInstance;
-        public static KAndTDatabase MockInstance
-        {
-            get
-            {
-                if (_mockInstance == null)
-                    _mockInstance = new KAndTDatabase(true);
-                return _mockInstance;
             }
         }
 
@@ -39,8 +30,13 @@ namespace KandTKardach.Models
         {
             m_mockMode = true;
             m_albums = new Dictionary<string, Album>();
+            string serverPath = Configuration.ServerPath;
+
             m_albums.Add("Wedding", new Album(1, "Wedding"));
 
+            string dirName = serverPath + @"Content\Mock\Thumbnails\";
+            var files = System.IO.Directory.GetFiles(dirName);
+            InitializeMockImages(files);
         }
 
 		private KAndTDatabase() : base("ktkardach", "10.0.0.139", "ktuser", "gingerwaffles", "3306")
@@ -93,7 +89,7 @@ namespace KandTKardach.Models
 			get { return m_albums; }
 		}
         
-        public void InitializeMockImages(string[] files)
+        private void InitializeMockImages(string[] files)
         {
             int id = 0;
             foreach (var album in m_albums.Values)

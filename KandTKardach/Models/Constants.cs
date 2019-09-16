@@ -5,9 +5,14 @@ namespace KandTKardach
     {
         public static byte      THUMBNAIL_FACTOR = 35;
         public static int       THUMBNAIL_MAX_DIMENSION = 512;
-        public static string    THUMBNAIL_LOCATION = "~/Content/Thumbnails/";
-        public const string     TEMP_FOLDER = "tmp";
 
+        #region File Locations
+        public static string    THUMBNAIL_LOCATION      = "~/Content/Thumbnails/";
+        public static string    THUMBNAIL_LOCATION_MOCK = "~/Content/Mock/Thumbnails/";
+        public static string    IMAGE_LOCATION      = "~/Content/Images/";
+        public static string    IMAGE_LOCATION_MOCK = "~/Content/Mock/Images/";
+        public const string     TEMP_FOLDER = "tmp";
+        #endregion
         public static void CreateTemp()
         {
             if (!System.IO.Directory.Exists(TEMP_FOLDER))

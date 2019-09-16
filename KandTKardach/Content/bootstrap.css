@@ -96,7 +96,24 @@ p {
 .image-grid-wrap {
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(512px, 1fr));
+  grid-template-columns: repeat(4, minmax(128px, 512px));
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 1200px) {
+    .image-grid-wrap {
+      display: grid;
+      grid-gap: 10px;
+      grid-template-columns: repeat(3, minmax(128px, 512px));
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .image-grid-wrap {
+      display: grid;
+      grid-gap: 10px;
+      grid-template-columns: repeat(2, minmax(128px, 512px));
+    }
 }
 
 .image-grid-wrap img {

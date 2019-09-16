@@ -137,7 +137,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\WeddingController.cs" />
     <Compile Include="Controllers\BabyController.cs" />
+    <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\FileManager.cs" />
     <Compile Include="Models\KAndTDatabase.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Image.cs" />

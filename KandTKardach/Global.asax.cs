@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KandTKardach.Models;
+using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -12,7 +13,9 @@ namespace KandTKardach
         {
             AreaRegistration.RegisterAllAreas();
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);         
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Configuration.MockEnabled = true;
+            Configuration.ServerPath = Server.MapPath(@"~\");
         }
 
         protected void Application_Error(object sender, EventArgs e)
