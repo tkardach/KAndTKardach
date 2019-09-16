@@ -124,7 +124,10 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Security" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Images\" />
+    <Folder Include="Content\Thumbnails\" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
