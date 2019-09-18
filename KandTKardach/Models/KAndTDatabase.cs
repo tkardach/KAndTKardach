@@ -34,7 +34,7 @@ namespace KandTKardach.Models
 
             m_albums.Add("Wedding", new Album(1, "Wedding", 0));
 
-            string dirName = serverPath + @"Content\Mock\Thumbnails\";
+            string dirName = serverPath + @"Content\Mock\Images\";
             var files = System.IO.Directory.GetFiles(dirName);
             InitializeMockImages(files);
         }
