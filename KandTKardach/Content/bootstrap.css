@@ -100,6 +100,21 @@ p {
   width: 200px;
 }
 
+.quote-header img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 50%;
+}
+
+.quote-header p {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px;
+  font-size: 3vw;
+  color: #eee;
+  text-shadow: 1px 1px 4px #000
+}
+
 .image-view {
   margin-left: auto;
   margin-right: auto;
@@ -121,6 +136,7 @@ p {
 
 .image-grid-wrap {
   display: grid;
+  margin-top: 10px;
   grid-gap: 10px;
   grid-template-columns: repeat(4, minmax(128px, 512px));
 }

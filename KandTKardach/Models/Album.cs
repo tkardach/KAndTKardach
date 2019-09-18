@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace KandTKardach.Models
 {   
@@ -12,7 +13,15 @@ namespace KandTKardach.Models
 			m_images = new List<Image>();
         }
 
-		protected readonly int m_id;
+        public Album(int id, string name, int coverPhotoId)
+        {
+            m_id = id;
+            m_coverPhotoId = coverPhotoId;
+            m_albumName = name;
+            m_images = new List<Image>();
+        }
+
+        protected readonly int m_id;
         /// <summary>
         /// Gets the identifier.
         /// </summary>
@@ -21,6 +30,13 @@ namespace KandTKardach.Models
 		{
 			get { return m_id; }
 		}
+
+        protected int m_coverPhotoId;
+        public int CoverPhotoId
+        {
+            get { return m_coverPhotoId; }
+            set { m_coverPhotoId = value; }
+        }
 
 		protected string m_albumName;
         /// <summary>
@@ -42,5 +58,13 @@ namespace KandTKardach.Models
 			get { return m_images; }
 			set { m_images = value; }
 		}
+
+        public Image CoverPhoto
+        {
+            get
+            {
+                return m_images.Single(o => o.Id == m_coverPhotoId);
+            }
+        }
     }
 }

@@ -145,6 +145,7 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Controllers\ErrorHandlerController.cs" />
     <Compile Include="Models\ImageProcessing.cs" />
+    <Compile Include="ViewModel\AlbumHeaderViewModel.cs" />
     <Compile Include="ViewModel\ImageViewModel.cs" />
     <Compile Include="Models\Constants.cs" />
   </ItemGroup>
@@ -294,6 +295,7 @@
     <None Include="Content\bootstrap-reboot.css.map" />
     <None Include="Content\bootstrap-grid.min.css.map" />
     <None Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Views\Shared\_AlbumHeader.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

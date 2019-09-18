@@ -1,10 +1,11 @@
-﻿@model KandTKardach.Models.Album
+﻿@model KandTKardach.ViewModel.AlbumHeaderViewModel
 @{
     ViewBag.Title = "Wedding";
 }
 
+@Html.Partial("_AlbumHeader", Model)
 @{
-    if (Model.Images.Count == 0)
+    if (Model.Album.Images.Count == 0)
     {
         <h2> No wedding pictures loaded...</h2>
     }
@@ -12,10 +13,10 @@
     {
         <div class="image-grid-wrap">
         @{
-            for (int j = 0; j < Model.Images.Count; j++)
+            for (int j = 0; j < Model.Album.Images.Count; j++)
             {
-                <a href="@Url.Action("WeddingImage", "Wedding", new { Model.Images[j].Id })">
-                    <img src="@Model.Images[j].ThumbnailUrl" />
+                <a href="@Url.Action("WeddingImage", "Wedding", new { Model.Album.Images[j].Id })">
+                    <img src="@Model.Album.Images[j].ThumbnailUrl" />
                 </a>
             }
         }

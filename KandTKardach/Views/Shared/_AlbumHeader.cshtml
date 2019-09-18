@@ -1,0 +1,17 @@
+﻿@model KandTKardach.ViewModel.AlbumHeaderViewModel
+@{ 
+    var urlString = "~" + @Model.Album.CoverPhoto.Url;
+}
+<style type="text/css">
+.bgimg {
+    background-image: url('@Url.Content(urlString)');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+</style>
+<div class="quote-header bgimg">
+    <p style="text-align: left">"@Model.TopQuote</p>
+    <img src="@Model.Album.CoverPhoto.Url" style="visibility: hidden" />
+    <p style="text-align: right">@Model.BottomQuote."</p>
+</div>

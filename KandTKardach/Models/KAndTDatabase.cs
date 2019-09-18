@@ -32,7 +32,7 @@ namespace KandTKardach.Models
             m_albums = new Dictionary<string, Album>();
             string serverPath = Configuration.ServerPath;
 
-            m_albums.Add("Wedding", new Album(1, "Wedding"));
+            m_albums.Add("Wedding", new Album(1, "Wedding", 0));
 
             string dirName = serverPath + @"Content\Mock\Thumbnails\";
             var files = System.IO.Directory.GetFiles(dirName);
@@ -53,8 +53,9 @@ namespace KandTKardach.Models
 				while (cursor.Read())
 				{               
                     int id = Convert.ToInt32(cursor["id"]);
+                    int coverId = Convert.ToInt32(cursor["cover_photo_id"]);
                     string name = Convert.ToString(cursor["name"]);
-					m_albums.Add(name, new Album(id, name));
+					m_albums.Add(name, new Album(id, name, coverId));
 				}
 				cursor.Close();
 

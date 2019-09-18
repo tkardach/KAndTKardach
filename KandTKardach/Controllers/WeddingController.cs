@@ -17,8 +17,10 @@ namespace KandTKardach.Controllers
             // TODO : If tumbnail does not exist for any given photo, create one
             
             var album = db.Albums["Wedding"];
-
-            return View (album);
+            var viewModel = new ViewModel.AlbumHeaderViewModel(album, 
+                                                                "It doesn't matter what we're doing", 
+                                                                "as long as we're doing it together");
+            return View (viewModel);
         }
 
         public ActionResult WeddingImage(int id)
