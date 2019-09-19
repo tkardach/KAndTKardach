@@ -1,6 +1,6 @@
 ﻿@model KandTKardach.ViewModel.AlbumHeaderViewModel
 @{
-    var urlString = "~" + @Model.Album.CoverPhoto.Url;
+    var headerUrl = "~" + @Model.Album.CoverPhoto.Url;
     var parallaxInterval = Model.Album.Images.Count / 4;
 }
 <style type="text/css">
@@ -16,9 +16,9 @@ body, html {
 }
 </style>
 
-<div class="quote-header parallax" style="background-image: url('@Url.Content(urlString)'); margin-bottom: -20%;">
+<div class="quote-header parallax" style="background-image: url('@Url.Content(headerUrl)'); margin-bottom: -20vh;">
     <p style="text-align: left">"@Model.TopQuote</p>
-    <p style="padding-top:30%; text-align-last: right">@Model.BottomQuote."</p>
+    <p style="padding-top: 20vh; text-align-last: right">@Model.BottomQuote."</p>
 </div>
 
 @if (Model.Album.Images.Count == 0)
@@ -45,4 +45,4 @@ else
     }
 }
 
-<div class="parallax"  style="background-image: url('@Url.Content(urlString)')"></div>
+<div class="parallax"  style="background-image: url('@Url.Content(headerUrl)')"></div>
