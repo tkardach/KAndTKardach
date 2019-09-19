@@ -1,1 +1,48 @@
-﻿<h2>This is where the baby pictures would go.</h2>
+﻿@model KandTKardach.ViewModel.AlbumHeaderViewModel
+@{
+    var urlString = "~" + @Model.Album.CoverPhoto.Url;
+    var parallaxInterval = Model.Album.Images.Count / 4;
+}
+<style type="text/css">
+body, html {
+    height: 100%
+    }
+.parallax {
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+</style>
+
+<div class="quote-header parallax" style="background-image: url('@Url.Content(urlString)'); margin-bottom: -20%;">
+    <p style="text-align: left">"@Model.TopQuote</p>
+    <p style="padding-top:30%; text-align-last: right">@Model.BottomQuote."</p>
+</div>
+
+@if (Model.Album.Images.Count == 0)
+{
+    <h2> No pictures loaded...</h2>
+}
+else
+{
+    for (int j = 0; j < parallaxInterval; j++)
+    {
+        if (j > 0)
+        {
+            var parraString = "~" + @Model.Album.Images[j*parallaxInterval].Url;
+            <div class="parallax" style="background-image: url('@Url.Content(parraString)')"></div>
+        }
+        <div class="image-grid-wrap">
+        @for (int i = j * parallaxInterval; i < Model.Album.Images.Count && i < (j * parallaxInterval + parallaxInterval); i++)
+        {
+        <a href="@Url.Action("ViewImage", "Home", new { album=Model.Album.AlbumName, id=Model.Album.Images[i].Id })">
+            <img src="@Model.Album.Images[i].ThumbnailUrl" />
+        </a>
+        }
+        </div>
+    }
+}
+
+<div class="parallax"  style="background-image: url('@Url.Content(urlString)')"></div>

@@ -3,4 +3,45 @@
     ViewBag.Title = "Wedding";
 }
 
-@Html.Partial("_AlbumHeader", Model)
+@{
+    var urlString = "~" + @Model.Album.CoverPhoto.Url;
+}
+<style type="text/css">
+body, html {
+    height: 100%
+    }
+.parallax {
+    height: 100%;
+    background-image: url('@Url.Content(urlString)');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+</style>
+<div class="quote-header parallax" style="margin-bottom: -20%">
+    <p style="text-align: left">"@Model.TopQuote</p>
+    <p style="padding-top:30%; text-align-last: right">@Model.BottomQuote."</p>
+</div>
+<div>
+    @{
+        if (Model.Album.Images.Count == 0)
+        {
+            <h2> No pictures loaded...</h2>
+        }
+        else
+        {
+            <div class="image-grid-wrap">
+                @{
+                    for (int j = 0; j < Model.Album.Images.Count; j++)
+                    {
+                        <a href="@Url.Action("ViewImage", "Home", new { album=Model.Album.AlbumName, id=Model.Album.Images[j].Id })">
+                            <img src="@Model.Album.Images[j].ThumbnailUrl" />
+                        </a>
+                    }
+                }
+            </div>
+                    }
+    }
+</div>
+<div class="parallax"></div>

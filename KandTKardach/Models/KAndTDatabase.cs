@@ -33,6 +33,7 @@ namespace KandTKardach.Models
             string serverPath = Configuration.ServerPath;
 
             m_albums.Add("Wedding", new Album(1, "Wedding", 0));
+            m_albums.Add("Baby", new Album(2, "Baby", 1));
 
             string dirName = serverPath + @"Content\Mock\Images\";
             var files = System.IO.Directory.GetFiles(dirName);
@@ -41,6 +42,7 @@ namespace KandTKardach.Models
 
 		private KAndTDatabase() : base("ktkardach", "10.0.0.139", "ktuser", "gingerwaffles", "3306")
         {
+            // TODO : If tumbnail does not exist for any given photo, create one
             m_mockMode = false;
             m_albums = new Dictionary<string, Album>();
 			_connection.Open();
@@ -92,9 +94,9 @@ namespace KandTKardach.Models
         
         private void InitializeMockImages(string[] files)
         {
-            int id = 0;
             foreach (var album in m_albums.Values)
             {
+                int id = 0;
                 foreach (var file in files)
                 {
                     var thmbUrl = @"\Content\Mock\Thumbnails\" + Path.GetFileName(file);

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using KandTKardach.Models;
 using System.Web.Mvc;
 
 namespace KandTKardach.Controllers
@@ -10,7 +7,13 @@ namespace KandTKardach.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            KAndTDatabase db = KAndTDatabase.Instance;
+
+            var album = db.Albums["Baby"];
+            var viewModel = new ViewModel.AlbumHeaderViewModel(album,
+                                                                "My loneliness, is killin' meeee (and I)",
+                                                                "I must confess, I still believe (still believe)");
+            return View(viewModel);
         }
     }
 }

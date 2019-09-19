@@ -14,7 +14,6 @@ namespace KandTKardach.Controllers
         public ActionResult Index()
         {
 			KAndTDatabase db = KAndTDatabase.Instance;
-            // TODO : If tumbnail does not exist for any given photo, create one
             
             var album = db.Albums["Wedding"];
             var viewModel = new ViewModel.AlbumHeaderViewModel(album, 
