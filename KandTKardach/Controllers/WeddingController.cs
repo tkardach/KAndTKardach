@@ -23,12 +23,5 @@ namespace KandTKardach.Controllers
             return View (viewModel);
         }
 
-        public ActionResult WeddingImage(int id)
-		{
-            var db = KAndTDatabase.Instance;
-            var image = db.Albums["Wedding"].Images.Single(o => o.Id == id);
-			var imageVM = new ImageViewModel("Wedding", image);
-			return View(imageVM);
-		}
     }
 }

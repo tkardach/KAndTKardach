@@ -265,7 +265,7 @@
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Views\Shared\_Image.cshtml" />
-    <Content Include="Views\Wedding\WeddingImage.cshtml" />
+    <Content Include="Views\Home\ViewImage.cshtml" />
     <Content Include="Views\ErrorHandler\NotFound.cshtml" />
     <Content Include="Views\ErrorHandler\Index.cshtml" />
     <Content Include="Views\ErrorHandler\Error.cshtml" />

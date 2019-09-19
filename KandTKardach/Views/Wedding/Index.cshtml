@@ -4,22 +4,3 @@
 }
 
 @Html.Partial("_AlbumHeader", Model)
-@{
-    if (Model.Album.Images.Count == 0)
-    {
-        <h2> No wedding pictures loaded...</h2>
-    }
-    else
-    {
-        <div class="image-grid-wrap">
-        @{
-            for (int j = 0; j < Model.Album.Images.Count; j++)
-            {
-                <a href="@Url.Action("WeddingImage", "Wedding", new { Model.Album.Images[j].Id })">
-                    <img src="@Model.Album.Images[j].ThumbnailUrl" />
-                </a>
-            }
-        }
-        </div>
-    }
-}
