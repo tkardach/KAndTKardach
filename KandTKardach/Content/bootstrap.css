@@ -112,7 +112,22 @@ p {
   padding: 10px;
   font-size: 3vw;
   color: #eee;
-  text-shadow: 1px 1px 4px #000
+  text-shadow: 1px 1px 4px #000;
+}
+
+.month-header {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 5vw;
+  text-shadow: 1px 1px 4px #000;
+  color: #eee;
+  text-align: center;
+  background-color: lightblue;
+  padding: 1vw;
+}
+
+.linear-gradient {
+  background-image: linear-gradient(to bottom, #D8D8D8, #EEEEEE, #D8D8D8);
+  opacity: .5;
 }
 
 .image-view {
