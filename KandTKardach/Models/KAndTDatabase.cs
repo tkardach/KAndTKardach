@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace KandTKardach.Models
 {
@@ -14,16 +15,26 @@ namespace KandTKardach.Models
         protected bool m_mockMode;
 
 		private static KAndTDatabase _instance;
-		public static KAndTDatabase Instance
+		public static async Task<KAndTDatabase> GetInstanceAsync()
         {
-            get
+            if (_instance == null)
             {
-                if (_instance == null)
-                {
-                    _instance = new KAndTDatabase(Configuration.MockEnabled);
-                }
-                return _instance;
+                _instance = new KAndTDatabase(Configuration.MockEnabled);
+                await _instance.PullFromDatabaseAsync();
             }
+
+            return _instance;
+        }
+
+        public static KAndTDatabase GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new KAndTDatabase(Configuration.MockEnabled);
+                _instance.PullFromDatabase();
+            }
+
+            return _instance;
         }
 
         private KAndTDatabase(bool mock) : base(mock)
@@ -45,47 +56,104 @@ namespace KandTKardach.Models
             // TODO : If tumbnail does not exist for any given photo, create one
             m_mockMode = false;
             m_albums = new Dictionary<string, Album>();
-			_connection.Open();
-			try
-			{            
+        }
+        
+        /// <summary>
+        /// Populate the KAndTDatabase objects from the database asynchronously
+        /// </summary>
+        /// <returns></returns>
+        private async Task PullFromDatabaseAsync()
+        {
+            if (m_mockMode) return;
+            try
+            {
+                await _connection.OpenAsync();
+
                 MySqlCommand command = _connection.CreateCommand();
-				command.CommandText = GET_ALL_ALBUMS;
-				var cursor = command.ExecuteReader();
+                command.CommandText = GET_ALL_ALBUMS;
+                var cursor = await command.ExecuteReaderAsync();
                 // Get all of the albums in the database
-				while (cursor.Read())
-				{               
+                while (await cursor.ReadAsync())
+                {
                     int id = Convert.ToInt32(cursor["id"]);
                     int coverId = Convert.ToInt32(cursor["cover_photo_id"]);
                     string name = Convert.ToString(cursor["name"]);
-					m_albums.Add(name, new Album(id, name, coverId));
-				}
-				cursor.Close();
+                    m_albums.Add(name, new Album(id, name, coverId));
+                }
+                cursor.Close();
 
                 // For each album, add all associated images
-				foreach (var album in m_albums.Values)
-				{               
-					command.CommandText = GET_ALL_IMAGES + $" where album_id = '{album.Id}'";
-					cursor = command.ExecuteReader();
-                    while (cursor.Read())
-					{
+                foreach (var album in m_albums.Values)
+                {
+                    command.CommandText = GET_ALL_IMAGES + $" where album_id = '{album.Id}'";
+                    cursor = await command.ExecuteReaderAsync();
+                    while (await cursor.ReadAsync())
+                    {
                         int id = Convert.ToInt32(cursor["id"]);
-						string name = Convert.ToString(cursor["name"]);
-						string filename = Convert.ToString(cursor["filename"]);
-						album.Images.Add(new Image(id, name, filename));
-					}
-				}
-			}
+                        string name = Convert.ToString(cursor["name"]);
+                        string filename = Convert.ToString(cursor["filename"]);
+                        album.Images.Add(new Image(id, name, filename));
+                    }
+                }
+            }
             catch (Exception e)
-			{
-				Console.WriteLine(e.Message);
-				throw e;
-			}       
-			finally
-			{
-				_connection.Close();
-			}
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
         }
-        
+
+        /// <summary>
+        /// Populate the KAndTDatabase objects from the database
+        /// </summary>
+        /// <returns></returns>
+        private void PullFromDatabase()
+        {
+            if (m_mockMode) return;
+            try
+            {
+                _connection.Open();
+
+                MySqlCommand command = _connection.CreateCommand();
+                command.CommandText = GET_ALL_ALBUMS;
+                var cursor = command.ExecuteReader();
+                // Get all of the albums in the database
+                while (cursor.Read())
+                {
+                    int id = Convert.ToInt32(cursor["id"]);
+                    int coverId = Convert.ToInt32(cursor["cover_photo_id"]);
+                    string name = Convert.ToString(cursor["name"]);
+                    m_albums.Add(name, new Album(id, name, coverId));
+                }
+                cursor.Close();
+
+                // For each album, add all associated images
+                foreach (var album in m_albums.Values)
+                {
+                    command.CommandText = GET_ALL_IMAGES + $" where album_id = '{album.Id}'";
+                    cursor = command.ExecuteReader();
+                    while (cursor.Read())
+                    {
+                        int id = Convert.ToInt32(cursor["id"]);
+                        string name = Convert.ToString(cursor["name"]);
+                        string filename = Convert.ToString(cursor["filename"]);
+                        album.Images.Add(new Image(id, name, filename));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                _connection.Close();
+            }
+        }
+
 		protected IDictionary<string, Album> m_albums;
 		public IDictionary<string, Album> Albums
 		{

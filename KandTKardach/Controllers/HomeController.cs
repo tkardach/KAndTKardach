@@ -24,7 +24,11 @@ namespace KandTKardach.Controllers
         
         public ActionResult ViewImage(string album, int id)
         {
-            var db = KAndTDatabase.Instance;
+            var dbTask = KAndTDatabase.GetInstanceAsync();
+            dbTask.Wait();
+
+            var db = dbTask.Result;
+
             Image image;
             if (db.Albums.ContainsKey(album))
                 image = db.Albums[album].Images.Single(o => o.Id == id);

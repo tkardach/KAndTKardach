@@ -7,7 +7,10 @@ namespace KandTKardach.Controllers
     {
         public ActionResult Index()
         {
-            KAndTDatabase db = KAndTDatabase.Instance;
+            var dbTask = KAndTDatabase.GetInstanceAsync();
+            dbTask.Wait();
+
+            var db = dbTask.Result;
 
             var album = db.Albums["Baby"];
             var viewModel = new ViewModel.AlbumHeaderViewModel(album,
